@@ -2,6 +2,7 @@ package com.pl10.presta.service;
 
 import com.pl10.presta.entity.Cliente;
 import com.pl10.presta.entity.Credito;
+import com.pl10.presta.enums.CreditoStatus;
 import com.pl10.presta.model.ClienteModel;
 import com.pl10.presta.model.CreditoDetalleModel;
 import com.pl10.presta.model.CreditoModel;
@@ -19,5 +20,9 @@ public interface CreditoService {
     public abstract CreditoDetalleModel findByCreditoDetalleModel(String id);
 
     public abstract List<CreditoModel> allCreditOfClient(ClienteModel clienteModel);
+
+    public abstract List<ClienteModel> searchClienteModels(String str, int page, CreditoStatus creditoStatus);
+
+    public abstract Long countClienteModels(String str, CreditoStatus creditoStatus);
 
 }

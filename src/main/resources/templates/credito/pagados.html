@@ -10,12 +10,12 @@
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>Créditos Activos
-                <small>Lista de clientes que cuentan con creditos activos</small>
+            <h1>Créditos Pagados
+                <small>Lista de clientes que cuentan con creditos pagados</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a th:href="@{/}"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li class="active">Activos</li>
+                <li class="active">Pagados</li>
             </ol>
         </section>
         <section class="content">
@@ -62,7 +62,7 @@
         "iDisplayStart": 0,
         "fnDrawCallback": function () {
         },
-        "sAjaxSource": "/credito/clientes-credito-a",
+        "sAjaxSource": "/credito/clientes-credito-p",
         "aoColumns": [
             {
                 "mData": null,

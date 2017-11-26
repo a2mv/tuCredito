@@ -122,7 +122,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div th:if="${creditodetalle.cuotasfaltantes > 0}" class="box-footer">
+                                            <div th:if="${creditodetalle.cuotasfaltantes > 0
+                                            and creditodetalle.creditoModel.creditoStatus == T(com.pl10.presta.enums.CreditoStatus).ACTIVO}" class="box-footer">
                                                 <button type="button" class="btn btn-primary" data-toggle="modal"
                                                         data-target="#modal-registrar-pago">Registrar Pago
                                                 </button>

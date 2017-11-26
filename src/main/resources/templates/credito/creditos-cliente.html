@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragment/header :: headerFragment"></head>
+<body class="hold-transition skin-purple sidebar-mini">
+<div class="wrapper">
+    <header class="main-header" th:include="fragment/header :: main-headerFragment"></header>
+    <aside class="main-sidebar" th:include="fragment/sidebar :: main-sidebarFragment"></aside>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>Créditos de Cliente
+                <small>Lista de todos los créditos de un cliente</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a th:href="@{/}"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li><a th:href="@{/credito/listaactivos}">Créditos</a></li>
+                <li class="active">Gestionar</li>
+            </ol>
+        </section>
+        <section class="content">
+            <div class="row">
+                <div class="col-md-3">
+                    <!-- Profile Image -->
+                    <div class="box box-primary">
+                        <div class="box-body box-profile">
+                            <img class="profile-user-img img-responsive img-circle" th:src="@{/dist/img/avatar04.png}"
+                                 alt="User profile picture"/>
+
+                            <h3 class="profile-username text-center"><span
+                                    th:text="${clienteModel.fullname}"></span></h3>
+
+                            <p class="text-muted text-center"></p>
+
+                            <ul class="list-group list-group-unbordered">
+                                <li class="list-group-item">
+                                    <b>Créditos activos</b> <a class="pull-right">1,322</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Créditos pagados</b> <a class="pull-right">543</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Créditos atrazados</b> <a class="pull-right">13,287</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-9">
+                    <div class="box box-primary">
+                        <div class="box-body">
+                            <div class="table-responsive">
+                                <table id="table-creditos-cliente"  data-show-header="true" data-pagination="true" data-id-field="name"
+                                       data-page-list="[5, 10, 15, 20, 25, ALL]"
+                                       data-page-size="5"
+                                       class="table table-striped display responsive nowrap"
+                                       cellspacing="0" width="100%">
+                                    <thead>
+                                    <tr>
+                                        <th data-field="fecha" data-sortable="true" data-formatter="fechaFormatter">Fecha</th>
+                                        <th data-field="creditoStatus" data-sortable="true" data-formatter="statusFormatter">Estado</th>
+                                        <th data-field="valor" data-sortable="true" data-formatter="valorFormatter">Valor</th>
+                                        <th data-field="id" data-formatter="idFormatter"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- /.box -->
+                </div>
+
+
+            </div>
+
+
+
+
+
+
+
+
+            <!-- ESCRIBA AQUI SU CODIGO -->
+
+        </section>
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer" th:include="fragment/footer :: main-footerFragment"></footer>
+</div>
+<!-- /.wrapper -->
+<div th:replace="fragment/footer :: scripts"></div>
+
+<!-- bootstrap-table -->
+<script th:src="@{/node_modules/bootstrap-table/dist/bootstrap-table.js}"></script>
+<!-- bootstrap-table locale -->
+<script th:src="@{/node_modules/bootstrap-table/dist/locale/bootstrap-table-es-MX.js}"></script>
+<!-- ADICIONE AQUI SU JS -->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    function fechaFormatter(value) {
+        var fecha = new Date(value);
+        return fecha.getDate()+"/"+fecha.getMonth()+"/"+fecha.getFullYear();
+    }
+
+    function statusFormatter(value) {
+        var estado ='';
+        if(value.$name == 'ACTIVO'){
+            estado = '<span style="color:red;">ACTIVO</span>'
+        }else if(value.$name == 'PAGADO'){
+            estado = '<span>PAGADO</span>'
+        }else{
+            estado = '<span style="color:#7a869d;">ANULADO</span>'
+        }
+        return estado;
+    }
+
+    function valorFormatter(value) {
+        var valor = value.toLocaleString(
+            'en-US', // use a string like 'en-US' to override browser locale
+            { minimumFractionDigits: 0 }
+        );
+        return "$"+valor;
+    }
+
+    function idFormatter(value) {
+        return '<a  href="/credito/detalle-credito?id='+value+'" class="btn btn-primary btn-xs"> Ver</a> ' +
+            '<a  href="/credito/anular-credito?id='+value+'" class="btn btn-warning btn-xs"> Anular</a>';
+    }
+
+    jQuery(function () {
+        var creditos = [[${creditoModels}]]
+        $('#table-creditos-cliente').bootstrapTable({
+            data: creditos
+        });
+    });
+    /*]]>*/
+</script>
+</body>
+</html>

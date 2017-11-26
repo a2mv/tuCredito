@@ -2,6 +2,7 @@ package com.pl10.presta.repository.query;
 
 import com.pl10.presta.entity.Cliente;
 import com.pl10.presta.entity.QCliente;
+import com.pl10.presta.enums.CreditoStatus;
 import com.querydsl.jpa.impl.JPAQuery;
 import org.springframework.stereotype.Repository;
 
@@ -38,6 +39,5 @@ public class ClienteDslRepository {
                 ).fetchCount();
         return count;
     }
-
 
 }

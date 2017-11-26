@@ -1,5 +1,7 @@
 package com.pl10.presta.controller;
 
+import com.pl10.presta.entity.Credito;
+import com.pl10.presta.enums.CreditoStatus;
 import com.pl10.presta.enums.CreditoType;
 import com.pl10.presta.model.*;
 import com.pl10.presta.service.ClienteService;
@@ -95,7 +97,103 @@ public class CreditoController {
     @GetMapping("/listaactivos")
     private ModelAndView listaActivos(){
         ModelAndView model = new ModelAndView("credito/activos");
-
         return model;
+    }
+
+    @GetMapping("/listapagados")
+    private ModelAndView listaPagados(){
+        ModelAndView model = new ModelAndView("credito/pagados");
+        return model;
+    }
+
+    @GetMapping("/listaanulados")
+    private ModelAndView listaAnulados(){
+        ModelAndView model = new ModelAndView("credito/inactivos");
+        return model;
+    }
+
+    @GetMapping("/clientes-credito-a")
+    @ResponseBody
+    private JsonObject<ClienteModel> allClientesWithCredits(HttpServletRequest request){
+        LOG.info("METHOD: allClientesWithCredits() -- PARAMS: "+request);
+        Integer pageNumber = 0;
+        if (null != request.getParameter("iDisplayStart")){
+            pageNumber = (Integer.valueOf(request.getParameter("iDisplayStart"))/10)+1;
+        }
+        String searchParameter = request.getParameter("sSearch");
+
+        List<ClienteModel> clienteModels = creditoService.searchClienteModels(searchParameter, pageNumber, CreditoStatus.ACTIVO);
+        Long countRecords = creditoService.countClienteModels(searchParameter, CreditoStatus.ACTIVO);
+        JsonObject<ClienteModel> jsonObject = new JsonObject<ClienteModel>();
+        jsonObject.setiTotalDisplayRecords(countRecords.intValue());
+        jsonObject.setiTotalRecords(countRecords.intValue());
+        jsonObject.setAaData(clienteModels);
+        return jsonObject;
+    }
+
+    @GetMapping("/clientes-credito-i")
+    @ResponseBody
+    private JsonObject<ClienteModel> allClientesWithCreditsI(HttpServletRequest request){
+        LOG.info("METHOD: allClientesWithCreditsI() -- PARAMS: "+request);
+        Integer pageNumber = 0;
+        if (null != request.getParameter("iDisplayStart")){
+            pageNumber = (Integer.valueOf(request.getParameter("iDisplayStart"))/10)+1;
+        }
+        String searchParameter = request.getParameter("sSearch");
+
+        List<ClienteModel> clienteModels = creditoService.searchClienteModels(searchParameter, pageNumber, CreditoStatus.ANULADO);
+        Long countRecords = creditoService.countClienteModels(searchParameter, CreditoStatus.ANULADO);
+        JsonObject<ClienteModel> jsonObject = new JsonObject<ClienteModel>();
+        jsonObject.setiTotalDisplayRecords(countRecords.intValue());
+        jsonObject.setiTotalRecords(countRecords.intValue());
+        jsonObject.setAaData(clienteModels);
+        return jsonObject;
+    }
+
+    @GetMapping("/clientes-credito-p")
+    @ResponseBody
+    private JsonObject<ClienteModel> allClientesWithCreditsP(HttpServletRequest request){
+        LOG.info("METHOD: allClientesWithCreditsP() -- PARAMS: "+request);
+        Integer pageNumber = 0;
+        if (null != request.getParameter("iDisplayStart")){
+            pageNumber = (Integer.valueOf(request.getParameter("iDisplayStart"))/10)+1;
+        }
+        String searchParameter = request.getParameter("sSearch");
+
+        List<ClienteModel> clienteModels = creditoService.searchClienteModels(searchParameter, pageNumber, CreditoStatus.PAGADO);
+        Long countRecords = creditoService.countClienteModels(searchParameter, CreditoStatus.PAGADO);
+        JsonObject<ClienteModel> jsonObject = new JsonObject<ClienteModel>();
+        jsonObject.setiTotalDisplayRecords(countRecords.intValue());
+        jsonObject.setiTotalRecords(countRecords.intValue());
+        jsonObject.setAaData(clienteModels);
+        return jsonObject;
+    }
+
+    /**
+     *
+     * @param id identificador del credito
+     * @return la vista de gestión de pagos del credito
+     */
+    @GetMapping("/ver-creditos")
+    private ModelAndView creditoCliente(@RequestParam(name="id", required=false) String id){
+        LOG.info("METHOD: creditoCliente() -- PARAMS: "+id);
+        ModelAndView model = new ModelAndView("credito/creditos-cliente");
+        ClienteModel clienteModel = clienteService.findClienteModelById(id);
+
+        List<CreditoModel> creditoModels = creditoService.allCreditOfClient(clienteModel);
+        model.addObject("creditoModels",creditoModels);
+        model.addObject("clienteModel",clienteModel);
+        LOG.info("RETURN VIEW: credito/creditos-cliente -- Object: "+creditoModels+" "+clienteModel);
+        return model;
+    }
+
+    @GetMapping("/anular-credito")
+    private ModelAndView anularCredito(@RequestParam(name="id", required=false) String id){
+        LOG.info("METHOD: anularCredito() -- PARAMS: "+id);
+        CreditoModel creditoModel = creditoService.findByCreditoModel(id);
+        creditoModel.setCreditoStatus(CreditoStatus.ANULADO);
+        System.out.println(creditoModel.getCreditoStatus());
+        creditoModel = creditoService.saveCreditoModel(creditoModel);
+        return new ModelAndView("redirect:/credito/ver-creditos?id="+creditoModel.getClienteModel().getId());
     }
 }

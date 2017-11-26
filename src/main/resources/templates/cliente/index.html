@@ -49,6 +49,7 @@
 <!-- datatable bs-->
 <script th:src="@{/node_modules/datatables.net-bs/js/dataTables.bootstrap.js}"></script>
 <script th:inline="javascript">
+    /*<![CDATA[*/
     $('#table-cliente').DataTable({
         responsive: {
             details: true
@@ -96,6 +97,7 @@
             },
         ]
     });
+    /*]]>*/
 </script>
 </body>
 </html>

@@ -14,6 +14,7 @@ import com.pl10.presta.model.CreditoModel;
 import com.pl10.presta.model.PagoModel;
 import com.pl10.presta.repository.CreditoRepository;
 import com.pl10.presta.repository.PagoRepository;
+import com.pl10.presta.repository.query.CreditoDslRepository;
 import com.pl10.presta.service.CreditoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -48,9 +49,15 @@ public class CreditoServiceImpl implements CreditoService {
     @Qualifier("clienteConverter")
     private ClienteConverter clienteConverter;
 
+    @Autowired
+    @Qualifier("creditoDslRepository")
+    private CreditoDslRepository creditoDslRepository;
+
     @Override
     public CreditoModel saveCreditoModel(CreditoModel creditoModel) {
-        creditoModel.setCreditoStatus(CreditoStatus.ACTIVO);
+        if(creditoModel.getCreditoStatus()!=CreditoStatus.ANULADO){
+            creditoModel.setCreditoStatus(CreditoStatus.ACTIVO);
+        }
         Credito credito = creditoConverter.creditoModelToCredito(creditoModel);
         creditoModel = creditoConverter.creditoToCreditoModel(creditoRepository.save(credito));
         //generamos primer pago.
@@ -107,6 +114,21 @@ public class CreditoServiceImpl implements CreditoService {
             creditoModels.add(creditoConverter.creditoToCreditoModel(credito));
         }
         return creditoModels;
+    }
+
+    @Override
+    public List<ClienteModel> searchClienteModels(String str, int page, CreditoStatus creditoStatus) {
+        List<Cliente> clientes = creditoDslRepository.searchAllClienteCredit(str, page, creditoStatus);
+        List<ClienteModel> clienteModels = new ArrayList<ClienteModel>();
+        for(Cliente cliente : clientes){
+            clienteModels.add(clienteConverter.clienteToClienteModel(cliente));
+        }
+        return clienteModels;
+    }
+
+    @Override
+    public Long countClienteModels(String str, CreditoStatus creditoStatus) {
+        return creditoDslRepository.countAllClienteCredit(str, creditoStatus);
     }
 
     private Date calcularFechaDeCuota(Date fecha, CreditoType creditoType, Integer cuotasPagadas) {
