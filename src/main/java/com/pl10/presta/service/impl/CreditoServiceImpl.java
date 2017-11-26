@@ -131,6 +131,12 @@ public class CreditoServiceImpl implements CreditoService {
         return creditoDslRepository.countAllClienteCredit(str, creditoStatus);
     }
 
+    @Override
+    public Long countCreditosByClient(ClienteModel clienteModel, CreditoStatus creditoStatus) {
+        Cliente cliente = clienteConverter.clienteModelToCliente(clienteModel);
+        return creditoRepository.countCreditoByClienteAndCreditoStatus(cliente, creditoStatus);
+    }
+
     private Date calcularFechaDeCuota(Date fecha, CreditoType creditoType, Integer cuotasPagadas) {
         for (int i = 0; i < cuotasPagadas; i++) {
             if (creditoType.equals(CreditoType.DIARIO)) {

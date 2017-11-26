@@ -25,4 +25,6 @@ public interface CreditoService {
 
     public abstract Long countClienteModels(String str, CreditoStatus creditoStatus);
 
+    public abstract Long countCreditosByClient(ClienteModel clienteModel, CreditoStatus creditoStatus);
+
 }

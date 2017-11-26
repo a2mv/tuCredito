@@ -53,7 +53,7 @@
                     </div>
                     <div class="box-footer">
                         <button type="submit" class="btn btn-primary pull-left">Enviar</button>
-                        <a th:if="${cliente.id != '' and cliente.id != null}" th:href="@{/credito/ver-creditos(id=cliente.id)}" class="btn pull-right btn-warning">Ver Créditos</a>
+                        <a th:if="${cliente.id != '' and cliente.id != null}" th:href="@{/credito/ver-creditos(id=${cliente.id})}" class="btn pull-right btn-warning">Ver Créditos</a>
                     </div>
                 </form>
             </div>
