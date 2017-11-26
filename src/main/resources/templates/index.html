@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragment/header :: headerFragment"></head>
+<body class="hold-transition skin-purple sidebar-mini">
+<div class="wrapper">
+    <header class="main-header" th:include="fragment/header :: main-headerFragment"></header>
+    <aside class="main-sidebar" th:include="fragment/sidebar :: main-sidebarFragment"></aside>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>Blank page<small>it all starts here</small></h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li><a href="#">Examples</a></li>
+                <li class="active">Blank</li>
+            </ol>
+        </section>
+        <section class="content">
+
+
+        <!-- ESCRIBA AQUI SU CODIGO -->
+            <span th:text="${@localPrincipal.getUser().getFullname()}"></span>
+
+        </section>
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer" th:include="fragment/footer :: main-footerFragment"></footer>
+</div>
+<!-- /.wrapper -->
+<div th:replace="fragment/footer :: scripts" > </div>
+<!-- ADICIONE AQUI SU JS -->
+</body>
+</html>

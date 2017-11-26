@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="headerFragment">
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>tuCrédito | PL10</title>
+
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" th:href="@{/node_modules/bootstrap/dist/css/bootstrap.css}"/>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" th:href="@{/node_modules/font-awesome/css/font-awesome.min.css}"/>
+    <!-- Ionicons -->
+    <link rel="stylesheet" th:href="@{/node_modules/ionicons/dist/css/ionicons.css}"/>
+    <!-- datatable -->
+    <link rel="stylesheet" th:href="@{/node_modules/datatables.net-bs/css/dataTables.bootstrap.css}"/>
+    <!-- datatable -->
+    <link rel="stylesheet" th:href="@{/node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css}"/>
+    <!-- bootstrap-table -->
+    <link rel="stylesheet" th:href="@{/node_modules/bootstrap-table/dist/bootstrap-table.css}"/>
+    <!-- Theme style -->
+    <link rel="stylesheet" th:href="@{/dist/css/AdminLTE.min.css}"/>
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" th:href="@{/dist/css/skin-purple.min.css}"/>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Google Font -->
+    <link rel="stylesheet" th:href="@{/dist/css/fonts/Source-Sans-Pro.css}"/>
+</head>
+
+<header th:fragment="main-headerFragment">
+    <a th:href="@{/}" class="logo">
+        <!-- mini logo for sidebar mini 50x50 pixels -->
+        <span class="logo-mini"><b>Pl</b>10</span>
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg"><b>tu</b>Crédito</span>
+    </a>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </a>
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+                <!-- User Account: style can be found in dropdown.less -->
+                <li class="dropdown user user-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img th:src="@{/dist/img/avatar04.png}" class="user-image" alt="User Image"/>
+                        <span class="hidden-xs" th:text="${@localPrincipal.getUser().getFullname()}">Nombre de Usuario</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <!-- User image -->
+                        <li class="user-header">
+                            <img th:src="@{/dist/img/avatar04.png}" class="img-circle" alt="User Image"/>
+
+                            <p>
+                                <span th:text="${@localPrincipal.getUser().getFullname()+' - '}">Nombre Usuario</span>
+                                <span th:text="${@localPrincipal.getUser().getOcupation()}">Profesion</span>
+                                <small>Miembro desde <span th:text="${@localPrincipal.getUser().getCreateAtFormat()}">Nov. 2012</span></small>
+                            </p>
+                        </li>
+                        <!-- Menu Body -->
+                        <li class="user-body">
+                            <div class="row">
+
+                            </div>
+                            <!-- /.row -->
+                        </li>
+                        <!-- Menu Footer-->
+                        <li class="user-footer">
+                            <div class="pull-left">
+                                <a href="#" class="btn btn-default btn-flat">Perfil</a>
+                            </div>
+                            <div class="pull-right">
+                                <form th:action="@{/logout}" method="POST">
+                                    <button class="btn btn-default btn-flat" type="submit">Salir</button>
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+
+</html>

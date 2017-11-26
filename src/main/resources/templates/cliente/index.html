@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragment/header :: headerFragment"></head>
+<body class="hold-transition skin-purple sidebar-mini">
+<div class="wrapper">
+    <header class="main-header" th:include="fragment/header :: main-headerFragment"></header>
+    <aside class="main-sidebar" th:include="fragment/sidebar :: main-sidebarFragment"></aside>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>Clientes
+                <small>Lista de todos los clientes</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a th:href="@{/}"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">Clientes</li>
+            </ol>
+        </section>
+        <section class="content">
+            <div class="box box-primary">
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table id="table-cliente" class="table table-striped display responsive nowrap" cellspacing="0" width="100%">
+                            <thead>
+                            <tr>
+                                <th>Documento</th>
+                                <th>Nombre</th>
+                                <th width="10"></th>
+                                <th width="10"></th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer" th:include="fragment/footer :: main-footerFragment"></footer>
+</div>
+<!-- /.wrapper -->
+<div th:replace="fragment/footer :: scripts"></div>
+<!-- datatable -->
+<script th:src="@{/node_modules/datatables.net/js/jquery.dataTables.js}"></script>
+<!-- datatable bs-->
+<script th:src="@{/node_modules/datatables.net-bs/js/dataTables.bootstrap.js}"></script>
+<script th:inline="javascript">
+    $('#table-cliente').DataTable({
+        responsive: {
+            details: true
+        },
+        "lengthChange": false,
+        "ordering": false,
+        "autoWidth": false,
+        "bProcessing": true,
+        "bServerSide": true,
+        "sort": "position",
+        "bStateSave": false,
+        //"iDisplayLength": 10,
+        "iDisplayStart": 0,
+        "fnDrawCallback": function () {
+        },
+        "sAjaxSource": "/cliente/allclientes",
+        "aoColumns": [
+            {
+                "mData": null,
+                "bSortable": false,
+                "mRender": function (data) {
+                    return data.ndocumento;
+                }
+            },
+            {
+                "mData": null,
+                "bSortable": false,
+                "mRender": function (data) {
+                    return data.fullname;
+                }
+            },
+            {
+                "mData": null,
+                "bSortable": false,
+                "mRender": function (data) {
+                    return '<a href="/cliente/form?id=' + data.id + '"><span class="btn btn-primary btn-flat btn-xs">Editar</span></a>';
+                }
+            },
+            {
+                "mData": null,
+                "bSortable": false,
+                "mRender": function (data) {
+                    return '<a href="/credito/form?id=' + data.id + '"><span class="btn btn-warning btn-flat btn-xs">Crédito</span></a>';
+                }
+            },
+        ]
+    });
+</script>
+</body>
+</html>

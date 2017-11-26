@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragment/header :: headerFragment"></head>
+<body class="hold-transition skin-purple sidebar-mini">
+<div class="wrapper">
+    <header class="main-header" th:include="fragment/header :: main-headerFragment"></header>
+    <aside class="main-sidebar" th:include="fragment/sidebar :: main-sidebarFragment"></aside>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>Cliente
+                <small>Crear/Modificar datos del cliente</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a th:href="@{/}"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li><a th:href="@{/cliente/lista}">Clientes</a></li>
+                <li class="active">Editar</li>
+            </ol>
+        </section>
+        <section class="content">
+            <div class="box box-primary">
+                <!-- /.box-header -->
+                <form role="form" data-toggle="validator" action="#" th:action="@{/cliente/savecliente}" th:object="${cliente}" method="post">
+                    <input type="hidden" th:field="*{id}"></input>
+
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="documento">Identificación</label>
+                            <input type="text" class="form-control" id="documento" th:field="*{ndocumento}" th:value="${ndocumento}" placeholder="Escriba identificación" th:required="required"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="fullname">Nombre Completo</label>
+                            <input type="text" class="form-control" id="fullname" th:field="*{fullname}" th:value="${fullname}" placeholder="Escriba nombre" th:required="required"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefono">Teléfono</label>
+                            <input type="text" class="form-control" id="telefono" th:field="*{telefono}" th:value="${telefono}" placeholder="Escriba teléfono"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="direccion">Dirección</label>
+                            <input type="text" class="form-control" id="direccion" th:field="*{direccion}" th:value="${direccion}" placeholder="Escriba dirección"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="observacion">Observación</label>
+                            <textarea class="form-control" rows="2" id="observacion" th:field="*{observacion}" th:value="${observacion}" placeholder="Escriba Observación"></textarea>
+                        </div>
+                        <th:block th:if="${message != null}">
+                            <div th:replace="fragment/footer :: alert(type=${type}, message=${message})" ></div>
+                        </th:block>
+
+                    </div>
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary pull-left">Enviar</button>
+                        <a th:if="${cliente.id != '' and cliente.id != null}" th:href="@{/}" class="btn pull-right btn-warning">Ver Créditos</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer" th:include="fragment/footer :: main-footerFragment"></footer>
+</div>
+<!-- /.wrapper -->
+<div th:replace="fragment/footer :: scripts"></div>
+
+<!-- ADICIONE AQUI SU JS -->
+</body>
+</html>

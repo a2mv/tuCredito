@@ -1,0 +1,2 @@
+INSERT INTO presta.user (username, create_at, enabled, fullname, ocupation, password) VALUES ('admin', '2017-11-01', true, 'System Sdministrator', 'SysAdmin', '$2a$10$dRJj41Ytusm7w0hDyZSkUeinKLihPkxHxmZc2ixjITjhmE.uQjpjm');
+INSERT INTO user_role (role, username) VALUES ('ROLE_ADMIN', 'admin');

@@ -1,0 +1,23 @@
+{
+  "name": "static",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/js/adminlte.min.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "bootstrap-datepicker": "^1.7.0",
+    "bootstrap-table": "^1.11.2",
+    "datatables.net": "^1.10.15",
+    "datatables.net-bs": "^1.10.15",
+    "fastclick": "^1.0.6",
+    "font-awesome": "^4.7.0",
+    "ionicons": "^3.0.0",
+    "jquery": "^3.2.1"
+  },
+  "devDependencies": {}
+}

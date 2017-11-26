@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<footer th:fragment="main-footerFragment">
+    <div class="pull-right hidden-xs">
+        <b>Version</b> 1.0.0
+    </div>
+    <strong>Copyright &copy; 2017 <a href="http://pl10.com.co">Soluciones PL10</a>.</strong> All rights
+    reserved.
+</footer>
+
+<div th:fragment="alert (type, message)" class="alert alert-dismissable" th:classappend="'alert-' + ${type}">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <span th:text="${message}">Test</span>
+</div>
+
+<div th:fragment="scripts">
+    <!-- jQuery 3 -->
+    <script th:src="@{/node_modules/jquery/dist/jquery.js}"></script>
+    <!-- Bootstrap 3.3.7 -->
+    <script th:src="@{/node_modules/bootstrap/dist/js/bootstrap.js}"></script>
+    <!-- FastClick -->
+    <script th:src="@{/node_modules/fastclick/lib/fastclick.js}"></script>
+    <!-- AdminLTE App -->
+    <script th:src="@{/dist/js/adminlte.min.js}"></script>
+    <!-- Pl10 App -->
+    <script th:src="@{/dist/js/app.js}"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.sidebar-menu').tree()
+        })
+    </script>
+</div>
+</body>
+</html>

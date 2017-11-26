@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragment/header :: headerFragment"></head>
+<body class="hold-transition skin-purple sidebar-mini">
+<div class="wrapper">
+    <header class="main-header" th:include="fragment/header :: main-headerFragment"></header>
+    <aside class="main-sidebar" th:include="fragment/sidebar :: main-sidebarFragment"></aside>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>Crédito
+                <small>Detalle del crédito y pago de cuotas</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a th:href="@{/}"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li><a th:href="@{/credito/lista}">Créditos</a></li>
+                <li class="active">Gestionar</li>
+            </ol>
+        </section>
+        <section class="content">
+            <div class="row">
+                <div class="col-md-3">
+                    <!-- Profile Image -->
+                    <div class="box box-primary">
+                        <div class="box-body box-profile">
+                            <img class="profile-user-img img-responsive img-circle" th:src="@{/dist/img/avatar04.png}"
+                                 alt="User profile picture"/>
+
+                            <h3 class="profile-username text-center"><span
+                                    th:text="${creditodetalle.creditoModel.clienteModel.fullname}"></span></h3>
+
+                            <p class="text-muted text-center"></p>
+
+                            <ul class="list-group list-group-unbordered">
+                                <li class="list-group-item">
+                                    <b>Créditos activos</b> <a class="pull-right">1,322</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Créditos pagados</b> <a class="pull-right">543</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Créditos atrazados</b> <a class="pull-right">13,287</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-9">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#dato-credito" data-toggle="tab">Crédito</a></li>
+                            <li><a href="#otros-creditos" data-toggle="tab">Otros Créditos</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="active tab-pane" id="dato-credito">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="box box-primary">
+                                            <div class="box-body">
+                                                <p class="text-center">
+                                                    <strong>Datos del Crédito</strong>
+                                                </p>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="table-responsive">
+                                                            <table class="table" cellspacing="0" width="100%">
+                                                                <tr>
+                                                                    <th style="width:50%">Fecha Crédito:</th>
+                                                                    <td><span
+                                                                            th:text="${#dates.format(creditodetalle.creditoModel.fecha, 'dd/MM/yyyy')}">19/08/2017</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th style="width:50%">Valor:</th>
+                                                                    <td>$<span
+                                                                            th:text="${#numbers.formatDecimal((creditodetalle.creditoModel.valor), 0, 'COMMA', 0, 'POINT')}">0</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th style="width:50%">Número Cuotas:</th>
+                                                                    <td><span
+                                                                            th:text="${creditodetalle.creditoModel.cuotas}">0</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th style="width:50%">Taza:</th>
+                                                                    <td><span
+                                                                            th:text="${creditodetalle.creditoModel.taza}">0</span>%
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="table-responsive">
+                                                            <table class="table">
+                                                                <tr>
+                                                                    <th style="width:50%">Próxima Cuota:</th>
+                                                                    <td><span
+                                                                            th:text="${#dates.format(creditodetalle.proximacuota, 'dd/MM/yyyy')}">19/08/2017</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th style="width:50%">Valor Cuota:</th>
+                                                                    <td>$<span
+                                                                            th:text="${#numbers.formatDecimal((creditodetalle.valorcuota), 0, 'COMMA', 0, 'POINT')}">0</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th style="width:50%">Cuotas Faltantes:</th>
+                                                                    <td><span
+                                                                            th:text="${creditodetalle.cuotasfaltantes}">0</span>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div th:if="${creditodetalle.cuotasfaltantes > 0}" class="box-footer">
+                                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                        data-target="#modal-registrar-pago">Registrar Pago
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <!-- /.box -->
+                                    </div>
+                                    <!-- /.col-md-3 -->
+                                    <div class="col-md-4">
+                                        <div class="box box-primary">
+                                            <div class="box-body">
+                                                <p class="text-center">
+                                                    <strong>Meta</strong>
+                                                </p>
+                                                <div class="progress-group">
+                                                    <span class="progress-text">Pagado <span
+                                                            th:text="${#numbers.formatDecimal((100 - creditodetalle.faltante100), 0, 'COMMA', 2, 'POINT')}"></span>%</span>
+                                                    <span class="progress-number">
+                                                    <b><small>$<span th:text="${#numbers.formatDecimal((creditodetalle.faltante), 0, 'COMMA', 0, 'POINT')}">0</span></small>
+                                                    </b><small>/$<span th:text="${#numbers.formatDecimal((creditodetalle.creditoModel.valor), 0, 'COMMA', 0, 'POINT')}">0</span></small>
+                                                </span>
+                                                    <div class="progress sm">
+                                                        <div class="progress-bar progress-bar-aqua"
+                                                             th:style="'width: '+${100 - creditodetalle.faltante100}+'%'">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- /.progress-group -->
+                                            </div>
+                                        </div>
+                                        <!-- /.box -->
+                                    </div>
+                                    <!-- /.col-md-3 -->
+                                </div>
+                                <!-- /.row -->
+
+                                <div class="box box-primary">
+                                    <div class="box-body">
+                                        <p class="text-center">
+                                            <strong>Pagos Registrados</strong>
+                                        </p>
+                                        <div class="table-responsive">
+                                            <table id="table-cliente" class="table table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th>Fecha</th>
+                                                    <th>Cuotas</th>
+                                                    <th>Valor</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:each="pago : ${creditodetalle.pagoModels}">
+                                                    <td th:text="${#dates.format(pago.fecha, 'dd/MM/yyyy')}"></td>
+                                                    <td th:text="${pago.cuotas}"></td>
+                                                    <td th:text="${#numbers.formatDecimal((pago.valor), 0, 'COMMA', 0, 'POINT')}"></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <!-- /.box -->
+                            </div>
+                            <!-- /.dato-credito -->
+                            <div class="tab-pane" id="otros-creditos">
+                                <div class="box box-primary">
+                                    <div class="box-body">
+                                        <div class="table-responsive">
+                                            <table id="table-creditos-cliente"  data-show-header="true" data-pagination="true" data-id-field="name"
+                                                   data-page-list="[5, 10, 15, 20, 25, ALL]"
+                                                   data-page-size="5"
+                                                   class="table table-striped display responsive nowrap"
+                                                   cellspacing="0" width="100%">
+                                                <thead>
+                                                <tr>
+                                                    <th data-field="fecha" data-sortable="true" data-formatter="fechaFormatter">Fecha</th>
+                                                    <th data-field="creditoStatus" data-sortable="true" data-formatter="statusFormatter">Estado</th>
+                                                    <th data-field="valor" data-sortable="true" data-formatter="valorFormatter">Valor</th>
+                                                    <th data-field="id" data-formatter="idFormatter"></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <!-- /.box -->
+                            </div>
+                            <!-- /.otros-creditos -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- MODEL PARA REGISTRAR PAGO -->
+            <div class="modal fade" id="modal-registrar-pago">
+                <form role="form" data-toggle="validator" action="#"
+                      th:action="@{/credito/registrar-pago}" th:object="${pagoModel}" method="post">
+                    <input type="hidden" th:field="*{id}"></input>
+                    <input type="hidden" th:field="*{creditoModel.id}"></input>
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">Registrar Pago</h4>
+                            </div>
+                            <div class="modal-body">
+
+                                <div class="form-group">
+                                    <label class="control-label">Fecha:</label>
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text" th:field="*{fecha}"
+                                               th:value="${fecha}"
+                                               class="form-control pull-right" id="datepicker"
+                                               th:required="required"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cuotas">Número Cuotas</label>
+                                    <input type="number" class="form-control" id="cuotas" th:field="*{cuotas}"
+                                           th:value="${1}" th:required="required"/>
+                                    <small>El número de cuotas faltantes es el limite de cuotas por pagar</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="valor">Valor $:</label>
+                                    <input type="number" class="form-control" id="valor" th:field="*{valor}"
+                                           th:value="${valor}" th:disabled="disabled"/>
+                                </div>
+                                <input type="hidden" id="valor-abd" th:field="*{valor}"></input>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar
+                                </button>
+                                <button type="submit" class="btn btn-primary">Registrar</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </form>
+            </div>
+            <!-- /.modal -->
+
+            <!-- ESCRIBA AQUI SU CODIGO -->
+
+        </section>
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer" th:include="fragment/footer :: main-footerFragment"></footer>
+</div>
+<!-- /.wrapper -->
+<div th:replace="fragment/footer :: scripts"></div>
+<!-- bootstrap-datepicker -->
+<script th:src="@{/node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.js}"></script>
+<!-- bootstrap-table -->
+<script th:src="@{/node_modules/bootstrap-table/dist/bootstrap-table.js}"></script>
+<!-- bootstrap-table locale -->
+<script th:src="@{/node_modules/bootstrap-table/dist/locale/bootstrap-table-es-MX.js}"></script>
+<!-- ADICIONE AQUI SU JS -->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    //Date picker
+    jQuery('#datepicker').datepicker({
+        autoclose: true,
+        format: 'dd/mm/yyyy',
+
+    });
+
+    jQuery('#cuotas').on("change paste keyup", function () {
+
+        var cuotas = jQuery(this).val();
+        var valorCuota = [[${creditodetalle.valorcuota}]];
+        var cuotasfaltantes = [[${creditodetalle.cuotasfaltantes}]];
+        if(cuotas > cuotasfaltantes){
+            cuotas = cuotasfaltantes;
+            jQuery(this).val(cuotas);
+            jQuery("#valor").val(cuotas * valorCuota);
+            jQuery("#valor-abd").val(cuotas * valorCuota);
+        }else{
+            jQuery("#valor").val(cuotas * valorCuota);
+            jQuery("#valor-abd").val(cuotas * valorCuota);
+        }
+    });
+
+    function fechaFormatter(value) {
+        var fecha = new Date(value);
+        return fecha.getDate()+"/"+fecha.getMonth()+"/"+fecha.getFullYear();
+    }
+
+    function statusFormatter(value) {
+        var estado ='';
+        if(value.$name == 'ACTIVO'){
+            estado = '<span style="color:red;">ACTIVO</span>'
+        }else if(value.$name == 'PAGADO'){
+            estado = '<span>PAGADO</span>'
+        }else{
+            estado = '<span style="color:#7a869d;">ANULADO</span>'
+        }
+        return estado;
+    }
+
+    function valorFormatter(value) {
+        var valor = value.toLocaleString(
+            'en-US', // use a string like 'en-US' to override browser locale
+            { minimumFractionDigits: 0 }
+        );
+        return "$"+valor;
+    }
+
+    function idFormatter(value) {
+        return '<a  href="/credito/detalle-credito?id='+value+'" class="btn btn-primary btn-xs"> Ver</a>';
+    }
+
+    jQuery(function () {
+        var creditos = [[${creditoModels}]]
+        $('#table-creditos-cliente').bootstrapTable({
+            data: creditos
+        });
+    });
+
+
+    /*]]>*/
+</script>
+
+</body>
+</html>
